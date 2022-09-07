@@ -6,7 +6,8 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import produce from "immer";
 import Counter from "@/components/Counter";
-
+import WorksheetItemElement from "@/components/WorksheetItemElement";
+import { TbArrowsRandom as RandomIcon } from "react-icons/tb";
 const Home: NextPage = () => {
   const [additionWorksheetSettings, setAdditionWorksheetSettings] =
     useState<IAdditionWorksheetSettings>({
@@ -111,29 +112,22 @@ const Home: NextPage = () => {
                 }}
               />
               <button
-                className="bg-indigo-600 rounded px-3 py-2 text-white"
+                className="flex items-center justify-center gap-x-1 bg-indigo-600 rounded px-3 py-2 text-white"
                 onClick={handleGenerateWorksheet}
               >
-                Generate Worksheet
+                <RandomIcon />
+                <span>Generate Worksheet</span>
               </button>
             </div>
             {/* Worksheet */}
 
             <div className="mt-8 text-gray-600 flex flex-col gap-y-0.5">
               {additionWorksheetItems.map((worksheetItem, i) => (
-                <div key={i}>
-                  {`${i + 1}) `}
-                  {worksheetItem.operands.map((operandItem, i) => (
-                    <span key={i}>
-                      <span>{operandItem}</span>
-                      {i < worksheetItem.operands.length - 1 && <span>+</span>}
-                    </span>
-                  ))}
-                  ={" "}
-                  <span className="text-transparent hover:text-white">
-                    {worksheetItem.correctAnswer}
-                  </span>
-                </div>
+                <WorksheetItemElement
+                  key={i}
+                  nth={i + 1}
+                  worksheetItem={worksheetItem}
+                />
               ))}
             </div>
           </div>
