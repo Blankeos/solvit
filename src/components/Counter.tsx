@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import NumberFormat from "react-number-format";
 
 interface ICounter {
   defaultValue?: number;
@@ -35,13 +36,38 @@ const Counter: React.FC<ICounter> = ({
   }, [count]);
   return (
     <div className="flex">
-      <div>{count}</div>
-      <div className="flex flex-col">
-        <button onClick={handleIncrement}>+</button>
-        <button onClick={handleDecrement}>-</button>
-      </div>
+      <button
+        onClick={handleDecrement}
+        className="bg-indigo-600 text-white w-8 rounded"
+      >
+        -
+      </button>
+      <div className="w-10 h-8 grid place-items-center">{count}</div>
+      <button
+        onClick={handleIncrement}
+        className="bg-indigo-600 text-white w-8 rounded"
+      >
+        +
+      </button>
     </div>
   );
 };
 
 export default Counter;
+
+{
+  /* <NumberFormat
+          value={count}
+          defaultValue={defaultValue}
+          isAllowed={(values) => {
+            const { floatValue } = values;
+            if (floatValue) {
+              if (floatValue < min) return false;
+              if (floatValue > max) return false;
+              console.log("reached true");
+              return true;
+            }
+            return false;
+          }}
+        /> */
+}

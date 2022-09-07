@@ -61,55 +61,73 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div className="max-w-sm w-full">
-          <h2>How many digits per operand?</h2>
-          <Slider
-            range
-            allowCross={false}
-            defaultValue={[
-              additionWorksheetSettings.numberOfDigits.min,
-              additionWorksheetSettings.numberOfDigits.max,
-            ]}
-            min={1}
-            max={5}
-            onChange={(values) => {
-              if (Array.isArray(values)) {
-                setAdditionWorksheetSettings(
-                  setNumberOfDigits(additionWorksheetSettings, values)
-                );
-              }
-            }}
-          />
-          <h2>How many operands?</h2>
-          <Counter
-            defaultValue={2}
-            min={2}
-            max={4}
-            onChange={(value) => {
-              setAdditionWorksheetSettings(
-                setNumberOfOperands(additionWorksheetSettings, value)
-              );
-            }}
-          />
-        </div>
-        <div>
-          {additionWorksheetItems.map((worksheetItem, i) => (
-            <div key={i}>
-              {`${i + 1}) `}
-              {worksheetItem.operands.map((operandItem, i) => (
-                <span key={i}>
-                  <span>{operandItem}</span>
-                  {i < worksheetItem.operands.length - 1 && <span>+</span>}
-                </span>
-              ))}
-              ={" "}
-              <span className="text-transparent hover:text-white">
-                {worksheetItem.correctAnswer}
-              </span>
+        <div className="max-w-md mx-auto w-full">
+          <div className="flex flex-col px-5">
+            <h1>Solvit</h1>
+            {/* Settings */}
+            <div className="p-5 bg-gray-50 border rounded-xl text-sm flex flex-col gap-y-2">
+              <h2 className="text font-semibold mb-1">Settings</h2>
+              <div className="">
+                <h3>Number of digits</h3>
+                <div className="flex items-center">
+                  <Slider
+                    range
+                    allowCross={false}
+                    defaultValue={[
+                      additionWorksheetSettings.numberOfDigits.min,
+                      additionWorksheetSettings.numberOfDigits.max,
+                    ]}
+                    min={1}
+                    max={5}
+                    onChange={(values) => {
+                      if (Array.isArray(values)) {
+                        setAdditionWorksheetSettings(
+                          setNumberOfDigits(additionWorksheetSettings, values)
+                        );
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+              <h3>Number of operands</h3>
+              <Counter
+                defaultValue={2}
+                min={2}
+                max={4}
+                onChange={(value) => {
+                  setAdditionWorksheetSettings(
+                    setNumberOfOperands(additionWorksheetSettings, value)
+                  );
+                }}
+              />
+              <button
+                className="bg-indigo-600 rounded px-3 py-2 text-white"
+                onClick={handleGenerateWorksheet}
+              >
+                Generate Worksheet
+              </button>
             </div>
-          ))}
+            {/* Worksheet */}
+
+            <div className="mt-8 text-gray-600 flex flex-col gap-y-0.5">
+              {additionWorksheetItems.map((worksheetItem, i) => (
+                <div key={i}>
+                  {`${i + 1}) `}
+                  {worksheetItem.operands.map((operandItem, i) => (
+                    <span key={i}>
+                      <span>{operandItem}</span>
+                      {i < worksheetItem.operands.length - 1 && <span>+</span>}
+                    </span>
+                  ))}
+                  ={" "}
+                  <span className="text-transparent hover:text-white">
+                    {worksheetItem.correctAnswer}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <button onClick={handleGenerateWorksheet}>Generate Worksheet</button>
       </main>
 
       <footer>Footer</footer>
