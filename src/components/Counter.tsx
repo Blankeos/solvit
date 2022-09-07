@@ -38,14 +38,16 @@ const Counter: React.FC<ICounter> = ({
     <div className="flex">
       <button
         onClick={handleDecrement}
-        className="bg-indigo-600 text-white w-8 rounded"
+        className="bg-indigo-600 text-white w-8 rounded disabled:opacity-70"
+        disabled={count <= min}
       >
         -
       </button>
       <div className="w-10 h-8 grid place-items-center">{count}</div>
       <button
         onClick={handleIncrement}
-        className="bg-indigo-600 text-white w-8 rounded"
+        className="bg-indigo-600 text-white w-8 rounded disabled:opacity-70"
+        disabled={count >= max}
       >
         +
       </button>

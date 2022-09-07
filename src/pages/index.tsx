@@ -63,10 +63,20 @@ const Home: NextPage = () => {
       <main>
         <div className="max-w-md mx-auto w-full">
           <div className="flex flex-col px-5">
-            <h1>Solvit</h1>
+            <header className="my-5">
+              <h1 className="text-indigo-600 text-center font-bold text-xl">
+                Solvit
+              </h1>
+              <p className="text-gray-400 text-xs text-center">
+                🧮 Deliberate Math Practice Trainer. Create randomly generated
+                math worksheets to practice arithmetic fast!
+              </p>
+            </header>
             {/* Settings */}
             <div className="p-5 bg-gray-50 border rounded-xl text-sm flex flex-col gap-y-2">
-              <h2 className="text font-semibold mb-1">Settings</h2>
+              <h2 className="text font-semibold mb-1 text-gray-800">
+                Worksheet Settings
+              </h2>
               <div className="">
                 <h3>Number of digits</h3>
                 <div className="flex items-center">
