@@ -1,7 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import generateWorksheet from "@/util/generateWorksheet";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import produce from "immer";
+import Counter from "@/components/Counter";
 
 const Home: NextPage = () => {
   const [additionWorksheetSettings, setAdditionWorksheetSettings] =
@@ -22,7 +26,28 @@ const Home: NextPage = () => {
     },
   ]);
 
-  useEffect(() => {}, [additionWorksheetSettings]);
+  function setNumberOfOperands(
+    additionWorkSheetSettings: IAdditionWorksheetSettings,
+    numberOfOperands: number
+  ) {
+    return produce(additionWorkSheetSettings, (draft) => {
+      draft.numberOfOperands = numberOfOperands;
+    });
+  }
+  function setNumberOfDigits(
+    additionWorkSheetSettings: IAdditionWorksheetSettings,
+    minMax: number[]
+  ) {
+    return produce(additionWorkSheetSettings, (draft) => {
+      draft.numberOfDigits = {
+        min: minMax[0],
+        max: minMax[1],
+      };
+    });
+  }
+  useEffect(() => {
+    handleGenerateWorksheet();
+  }, [additionWorksheetSettings]);
 
   function handleGenerateWorksheet() {
     setAdditionWorksheetItems(generateWorksheet(additionWorksheetSettings));
@@ -36,8 +61,36 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div>
-          <input type="range" />
+        <div className="max-w-sm w-full">
+          <h2>How many digits per operand?</h2>
+          <Slider
+            range
+            allowCross={false}
+            defaultValue={[
+              additionWorksheetSettings.numberOfDigits.min,
+              additionWorksheetSettings.numberOfDigits.max,
+            ]}
+            min={1}
+            max={5}
+            onChange={(values) => {
+              if (Array.isArray(values)) {
+                setAdditionWorksheetSettings(
+                  setNumberOfDigits(additionWorksheetSettings, values)
+                );
+              }
+            }}
+          />
+          <h2>How many operands?</h2>
+          <Counter
+            defaultValue={2}
+            min={2}
+            max={4}
+            onChange={(value) => {
+              setAdditionWorksheetSettings(
+                setNumberOfOperands(additionWorksheetSettings, value)
+              );
+            }}
+          />
         </div>
         <div>
           {additionWorksheetItems.map((worksheetItem, i) => (
