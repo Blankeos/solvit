@@ -9,7 +9,6 @@ import Counter from "@/components/Counter";
 import WorksheetItemElement from "@/components/WorksheetItemElement";
 import { TbArrowsRandom as RandomIcon } from "react-icons/tb";
 import Range from "@/components/Range";
-import TwoThumbRange from "@/components/TwoThumbRange";
 import Link from "next/link";
 
 type ActionTypes =
