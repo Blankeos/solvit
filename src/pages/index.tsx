@@ -10,7 +10,7 @@ import WorksheetItemElement from "@/components/WorksheetItemElement";
 import { TbArrowsRandom as RandomIcon } from "react-icons/tb";
 import Range from "@/components/Range";
 import Link from "next/link";
-
+import { BsCheck as CheckIcon } from "react-icons/bs";
 type ActionTypes =
   | {
       type: "SET_NUMBER_OF_DIGITS";
@@ -214,19 +214,29 @@ const Home: NextPage = () => {
                   }}
                 />
               </div>
-              <div className="">
+              <div className="flex flex-col gap-y-1">
                 <h3>Contain negatives</h3>
                 <div className="flex gap-x-4 items-center">
-                  <input
-                    type="checkbox"
-                    className="w-7 h-7 flex-none"
-                    onChange={(e) => {
-                      dispatch({
-                        type: "SET_CONTAIN_NEGATIVES",
-                        payload: e.target.checked,
-                      });
-                    }}
-                  />
+                  <label
+                    htmlFor="contain-negatives-checkbox"
+                    className="relative flex-none h-7 w-7 grid place-items-center"
+                  >
+                    <input
+                      type="checkbox"
+                      id="contain-negatives-checkbox"
+                      className="check-box bg-gray-300 transition duration-150 relative appearance-none w-7 h-7 bg-transparent rounded"
+                      onChange={(e) => {
+                        dispatch({
+                          type: "SET_CONTAIN_NEGATIVES",
+                          payload: e.target.checked,
+                        });
+                      }}
+                    />
+                    <CheckIcon
+                      className="check-icon absolute text-white text-opacity-40 transition transform scale-75 ease-out duration-200"
+                      size="1.4rem"
+                    />
+                  </label>
                   {worksheetSettings.negative.containNegatives && (
                     <>
                       <span className="w-5 mr-2">
