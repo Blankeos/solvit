@@ -139,7 +139,7 @@ const Home: NextPage = () => {
                 Worksheet Randomizer Settings
               </h2>
               <div className="flex flex-col gap-y-1">
-                <h3>Number of digits</h3>
+                <h3 className="font-medium">Number of digits</h3>
                 <div className="border flex items-center p-2 px-5 gap-x-5 rounded-full bg-white">
                   <span className="w-5 text-center">
                     {Math.min(...worksheetSettings.numberOfDigits)}
@@ -186,8 +186,8 @@ const Home: NextPage = () => {
                   /> */}
                 </div>
               </div>
-              <div className="">
-                <h3>Number of operands</h3>
+              <div className="flex flex-col gap-y-1">
+                <h3 className="font-medium">Number of operands</h3>
                 <Counter
                   defaultValue={2}
                   min={2}
@@ -200,8 +200,8 @@ const Home: NextPage = () => {
                   }}
                 />
               </div>
-              <div className="">
-                <h3>Number of items</h3>
+              <div className="flex flex-col gap-y-1">
+                <h3 className="font-medium">Number of items</h3>
                 <Counter
                   defaultValue={15}
                   min={1}
@@ -215,11 +215,11 @@ const Home: NextPage = () => {
                 />
               </div>
               <div className="flex flex-col gap-y-1">
-                <h3>Contain negatives</h3>
+                <h3 className="font-medium">Contain negatives</h3>
                 <div className="flex gap-x-4 items-center">
                   <label
                     htmlFor="contain-negatives-checkbox"
-                    className="relative flex-none h-7 w-7 grid place-items-center"
+                    className="relative flex-none h-7 w-7 grid place-items-center cursor-pointer"
                   >
                     <input
                       type="checkbox"
