@@ -1,13 +1,15 @@
-interface IAdditionWorksheetSettings {
-  numberOfDigits: {
-    min: number;
-    max: number;
-  };
+interface IWorksheetSettings {
+  numberOfDigits: number[];
   numberOfItems: number;
   numberOfOperands: number;
+  operations: ("+" | "-" | "*" | "/")[];
+  negative: {
+    containNegatives: boolean;
+    chance: number;
+  };
 }
 
-interface IAdditionWorksheetItem {
-  operands: number[]; // default 2
+interface IWorksheetItem {
+  operands: string[];
   correctAnswer: number;
 }
