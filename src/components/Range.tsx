@@ -64,7 +64,7 @@ const Range: React.FC<IRangeProps> = ({
       renderThumb={({ props, index }) => (
         <div
           {...props}
-          className="bg-transparent grid place-items-center"
+          className="bg-transparent grid place-items-center outline-none focus:outline-none group"
           style={{
             ...props.style,
             height: "42px",
@@ -72,7 +72,7 @@ const Range: React.FC<IRangeProps> = ({
             // backgroundColor: `${index === 0 ? "#999" : "#495"}`,
           }}
         >
-          <div className="w-5 h-5 rounded-full bg-indigo-600"></div>
+          <div className="w-5 h-5 rounded-full bg-indigo-600 group-focus:ring-4 group-focus:ring-indigo-400 group-focus:ring-opacity-50 transform transition group-focus:scale-110"></div>
         </div>
       )}
     />
