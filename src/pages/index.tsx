@@ -10,6 +10,7 @@ import WorksheetItemElement from "@/components/WorksheetItemElement";
 import { TbArrowsRandom as RandomIcon } from "react-icons/tb";
 import Range from "@/components/Range";
 import TwoThumbRange from "@/components/TwoThumbRange";
+import Link from "next/link";
 
 type ActionTypes =
   | {
@@ -111,7 +112,7 @@ const Home: NextPage = () => {
     setAdditionWorksheetItems(generateWorksheet(worksheetSettings));
   }
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Head>
         <title>Solvit - Deliberate Math Practice Trainer!</title>
         <meta
@@ -121,7 +122,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="flex-grow">
         <div className="max-w-md mx-auto w-full">
           <div className="flex flex-col px-5">
             <header className="my-5">
@@ -138,9 +139,9 @@ const Home: NextPage = () => {
               <h2 className="text-sm font-semibold mb-1 text-gray-800">
                 Worksheet Randomizer Settings
               </h2>
-              <div className="flex flex-col gap-y-2">
+              <div className="flex flex-col gap-y-1">
                 <h3>Number of digits</h3>
-                <div className="flex items-center p-2 px-5 gap-x-5 rounded-full bg-white">
+                <div className="border flex items-center p-2 px-5 gap-x-5 rounded-full bg-white">
                   <span className="w-5 text-center">
                     {Math.min(...worksheetSettings.numberOfDigits)}
                   </span>
@@ -272,8 +273,15 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-
-      <footer>Footer</footer>
+      <footer className="bg-indigo-500 mt-10">
+        <div className="py-10 max-w-md mx-auto w-full text-center text-white text-sm">
+          2022 ©{" "}
+          <Link href="https://carlo.vercel.app/">
+            <a className="hover:text-indigo-200">Carlo Taleon</a>
+          </Link>
+          . All Rights Reserved.
+        </div>
+      </footer>
     </div>
   );
 };
