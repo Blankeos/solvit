@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 interface IWorksheetItemElementProps {
   nth: number;
-  worksheetItem: IAdditionWorksheetItem;
+  worksheetItem: IWorksheetItem;
 }
 
 const WorksheetItemElement: React.FC<IWorksheetItemElementProps> = ({

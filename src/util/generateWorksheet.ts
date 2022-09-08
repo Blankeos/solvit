@@ -1,17 +1,15 @@
 import random from "lodash/random";
-import { evaluate } from "mathjs";
+import math, { evaluate } from "mathjs";
 
-export default function generateWorksheet(
-  settings: IAdditionWorksheetSettings
-) {
-  const worksheetItems: IAdditionWorksheetItem[] = [];
+export default function generateWorksheet(settings: IWorksheetSettings) {
+  const worksheetItems: IWorksheetItem[] = [];
   for (let i = 0; i < settings.numberOfItems; i++) {
-    let operands: number[] = [];
+    let operands: string[] = [];
     // Generate Operand
     for (let j = 0; j < settings.numberOfOperands; j++) {
       const numberOfDigits = random(
-        settings.numberOfDigits.min,
-        settings.numberOfDigits.max
+        settings.numberOfDigits[0],
+        settings.numberOfDigits[1]
       );
       let numberString: string = "";
       // Generate Digit and concatenate in one number
@@ -22,8 +20,17 @@ export default function generateWorksheet(
           numberString += random(0, 9);
         }
       }
+
+      // Negative Randomizer
+      if (settings.negative.containNegatives) {
+        let randomFloat = random(0, 1, true);
+        if (randomFloat <= settings.negative.chance) {
+          numberString = `(-${numberString})`;
+        }
+      }
+
       // Parse the number string and add to operands list
-      operands.push(parseInt(numberString));
+      operands.push(numberString);
     }
 
     // Equation Parser
