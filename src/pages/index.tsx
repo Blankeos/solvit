@@ -113,10 +113,10 @@ const Home: NextPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>Solvit - Deliberate Math Practice Trainer!</title>
+        <title>Solvit - by Carlo Taleon</title>
         <meta
           name="description"
-          content="Create randomly generated math worksheets to practice arithmetic fast!"
+          content="Create randomly generated math worksheets to practice arithmetic fast! A deliberate math practice tool."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
