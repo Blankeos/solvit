@@ -12,6 +12,12 @@ import Range from "@/components/Range";
 import Link from "next/link";
 import Checkbox from "@/components/Checkbox";
 import Tippy from "@tippyjs/react";
+import {
+  FiPlus as AddIcon,
+  FiDivide as DivideIcon,
+  FiX as MultiplyIcon,
+  FiMinus as SubtractIcon,
+} from "react-icons/fi";
 type ActionTypes =
   | {
       type: "SET_NUMBER_OF_DIGITS";
@@ -253,7 +259,7 @@ const Home: NextPage = () => {
                     <Tippy
                       content={
                         <span className="text-xs">
-                          Check other items before unchecking 'Add'.
+                          Check other items before unchecking '+'.
                         </span>
                       }
                       placement="top-end"
@@ -288,7 +294,7 @@ const Home: NextPage = () => {
                       className="text-gray-600"
                       htmlFor="checkbox-operation-add"
                     >
-                      Add
+                      <AddIcon />
                     </label>
                   </div>
 
@@ -310,7 +316,7 @@ const Home: NextPage = () => {
                       className="text-gray-600"
                       htmlFor="checkbox-operation-subtract"
                     >
-                      Subtract
+                      <SubtractIcon />
                     </label>
                   </div>
                   <div className="flex gap-x-2 items-center">
@@ -331,7 +337,7 @@ const Home: NextPage = () => {
                       className="text-gray-600"
                       htmlFor="checkbox-operation-multiply"
                     >
-                      Multiply
+                      <MultiplyIcon />
                     </label>
                   </div>
                   <div className="flex gap-x-2 items-center">
@@ -352,7 +358,7 @@ const Home: NextPage = () => {
                       className="text-gray-600"
                       htmlFor="checkbox-operation-divide"
                     >
-                      Divide
+                      <DivideIcon />
                     </label>
                   </div>
                 </div>
