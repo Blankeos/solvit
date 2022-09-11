@@ -13,6 +13,7 @@ import Link from "next/link";
 import Checkbox from "@/components/Checkbox";
 import Tippy from "@tippyjs/react";
 import {
+  FiSettings as SettingsIcon,
   FiPlus as AddIcon,
   FiDivide as DivideIcon,
   FiX as MultiplyIcon,
@@ -160,9 +161,12 @@ const Home: NextPage = () => {
             {/* Settings */}
             <div className="p-5 bg-gray-50 border rounded-xl text-sm flex flex-col gap-y-5">
               <div className="flex items-center gap-x-3 justify-between">
-                <h2 className="text-sm font-semibold mb-1 text-gray-800">
-                  Worksheet Randomizer Settings
-                </h2>
+                <div className="flex gap-x-2 items-center text-gray-800 ">
+                  <SettingsIcon size="1rem" />
+                  <h2 className="transform translate-y-0.5 text-sm font-semibold mb-1 truncate">
+                    Worksheet Randomizer Settings
+                  </h2>
+                </div>
                 <button
                   onClick={() => {
                     setWorksheetSettingsDropdownIsOpen(
