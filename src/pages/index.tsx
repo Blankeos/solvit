@@ -10,7 +10,7 @@ import WorksheetItemElement from "@/components/WorksheetItemElement";
 import { TbArrowsRandom as RandomIcon } from "react-icons/tb";
 import Range from "@/components/Range";
 import Link from "next/link";
-import { BsCheck as CheckIcon } from "react-icons/bs";
+import Checkbox from "@/components/Checkbox";
 type ActionTypes =
   | {
       type: "SET_NUMBER_OF_DIGITS";
@@ -80,9 +80,9 @@ const reducer = produce((draft: IWorksheetSettings, action: ActionTypes) => {
 });
 
 const initialWorksheetSettings: IWorksheetSettings = {
-  numberOfDigits: [2, 2],
+  numberOfDigits: [1, 2],
   numberOfItems: 15,
-  numberOfOperands: 3,
+  numberOfOperands: 2,
   negative: {
     containNegatives: false,
     chance: 0.1,
@@ -107,11 +107,15 @@ const Home: NextPage = () => {
     handleGenerateWorksheet();
   }, [worksheetSettings]);
 
+  useEffect(() => {
+    console.log(worksheetSettings.operations);
+  }, []);
+
   function handleGenerateWorksheet() {
     setAdditionWorksheetItems(generateWorksheet(worksheetSettings));
   }
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <Head>
         <title>Solvit - by Carlo Taleon</title>
         <meta
@@ -166,24 +170,6 @@ const Home: NextPage = () => {
                   <span className="w-5 text-center">
                     {Math.max(...worksheetSettings.numberOfDigits)}
                   </span>
-                  {/* <Slider
-                    range
-                    allowCross={false}
-                    defaultValue={[
-                      worksheetSettings.numberOfDigits.min,
-                      worksheetSettings.numberOfDigits.max,
-                    ]}
-                    min={1}
-                    max={5}
-                    onChange={(values) => {
-                      if (Array.isArray(values)) {
-                        dispatch({
-                          type: "SET_NUMBER_OF_DIGITS",
-                          payload: values,
-                        });
-                      }
-                    }}
-                  /> */}
                 </div>
               </div>
               <div className="flex flex-col gap-y-1">
@@ -217,26 +203,16 @@ const Home: NextPage = () => {
               <div className="flex flex-col gap-y-1">
                 <h3 className="font-medium">Contain negatives</h3>
                 <div className="flex gap-x-4 items-center">
-                  <label
+                  <Checkbox
+                    checked={worksheetSettings.negative.containNegatives}
                     htmlFor="contain-negatives-checkbox"
-                    className="relative flex-none h-7 w-7 grid place-items-center cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      id="contain-negatives-checkbox"
-                      className="check-box bg-gray-300 transition duration-150 relative appearance-none w-7 h-7 bg-transparent rounded"
-                      onChange={(e) => {
-                        dispatch({
-                          type: "SET_CONTAIN_NEGATIVES",
-                          payload: e.target.checked,
-                        });
-                      }}
-                    />
-                    <CheckIcon
-                      className="check-icon absolute text-white text-opacity-40 transition transform scale-75 ease-out duration-200"
-                      size="1.4rem"
-                    />
-                  </label>
+                    onChange={(checked) => {
+                      dispatch({
+                        type: "SET_CONTAIN_NEGATIVES",
+                        payload: checked,
+                      });
+                    }}
+                  />
                   {worksheetSettings.negative.containNegatives && (
                     <>
                       <span className="w-5 mr-2">
@@ -257,6 +233,33 @@ const Home: NextPage = () => {
                       />
                     </>
                   )}
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-1">
+                <h3 className="font-medium">Operations</h3>
+                <div className="grid grid-cols-2 gap-y-2">
+                  <div className="flex gap-x-2 items-center">
+                    <Checkbox
+                      checked={worksheetSettings.operations.includes("+")}
+                      htmlFor="checkbox-operation-add"
+                      onChange={(checked) => {
+                        console.log(checked);
+                        dispatch({
+                          type: "SET_OPERATION",
+                          payload: {
+                            addOrRemove: checked ? "add" : "remove",
+                            operation: "+",
+                          },
+                        });
+                      }}
+                    />
+                    <label
+                      className="text-gray-600"
+                      htmlFor="checkbox-operation-add"
+                    >
+                      Add
+                    </label>
+                  </div>
                 </div>
               </div>
 
