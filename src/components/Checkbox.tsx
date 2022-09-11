@@ -7,9 +7,15 @@ interface ICheckboxProps {
   checked: boolean;
   /** @param `checked` is the nextState after this button is pressed */
   onChange: (checked: boolean) => void;
+  disabled?: boolean;
 }
 
-const Checkbox: React.FC<ICheckboxProps> = ({ onChange, htmlFor, checked }) => {
+const Checkbox: React.FC<ICheckboxProps> = ({
+  onChange,
+  htmlFor,
+  checked,
+  disabled = false,
+}) => {
   return (
     <label
       htmlFor={htmlFor}
@@ -17,9 +23,10 @@ const Checkbox: React.FC<ICheckboxProps> = ({ onChange, htmlFor, checked }) => {
     >
       <input
         type="checkbox"
+        disabled={disabled}
         checked={checked}
         id={htmlFor}
-        className="check-box bg-gray-300 transition duration-150 relative appearance-none w-7 h-7 rounded cursor-pointer"
+        className="check-box bg-gray-300 transition duration-150 relative appearance-none w-7 h-7 rounded cursor-pointer disabled:opacity-50"
         onChange={(e) => {
           onChange(e.target.checked);
         }}

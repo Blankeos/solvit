@@ -11,6 +11,7 @@ import { TbArrowsRandom as RandomIcon } from "react-icons/tb";
 import Range from "@/components/Range";
 import Link from "next/link";
 import Checkbox from "@/components/Checkbox";
+import Tippy from "@tippyjs/react";
 type ActionTypes =
   | {
       type: "SET_NUMBER_OF_DIGITS";
@@ -54,20 +55,23 @@ const reducer = produce((draft: IWorksheetSettings, action: ActionTypes) => {
     case "SET_OPERATION":
       if (action.payload.addOrRemove === "add") {
         if (
-          draft.operations.findIndex(
-            (op) => op === action.payload.operation
-          ) === -1
+          draft.operators.findIndex((op) => op === action.payload.operation) ===
+          -1
         ) {
-          draft.operations.push(action.payload.operation);
+          draft.operators.push(action.payload.operation);
         }
       }
 
       if (action.payload.addOrRemove === "remove") {
-        const index = draft.operations.findIndex(
+        const index = draft.operators.findIndex(
           (op) => op === action.payload.operation
         );
-        if (index !== -1) draft.operations.splice(index, 1);
+        if (index !== -1) draft.operators.splice(index, 1);
       }
+
+      // Preventive measures for empty operators
+      // if operators become empty after every action, add a default: "+"
+      if (draft.operators.length === 0) draft.operators.push("+");
       break;
     case "SET_CONTAIN_NEGATIVES":
       draft.negative.containNegatives = action.payload;
@@ -87,7 +91,7 @@ const initialWorksheetSettings: IWorksheetSettings = {
     containNegatives: false,
     chance: 0.1,
   },
-  operations: ["+"],
+  operators: ["+"],
 };
 const Home: NextPage = () => {
   const [worksheetSettings, dispatch] = useReducer(
@@ -110,6 +114,17 @@ const Home: NextPage = () => {
   function handleGenerateWorksheet() {
     setAdditionWorksheetItems(generateWorksheet(worksheetSettings));
   }
+
+  function handleOperatorsChange(checked: boolean, operator: OperatorType) {
+    dispatch({
+      type: "SET_OPERATION",
+      payload: {
+        addOrRemove: checked ? "add" : "remove",
+        operation: operator,
+      },
+    });
+  }
+
   return (
     <div className="flex flex-col min-h-screen ">
       <Head>
@@ -232,22 +247,43 @@ const Home: NextPage = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-y-1">
-                <h3 className="font-medium">Operations</h3>
+                <h3 className="font-medium">Operators</h3>
                 <div className="grid grid-cols-2 gap-y-2">
                   <div className="flex gap-x-2 items-center">
-                    <Checkbox
-                      checked={worksheetSettings.operations.includes("+")}
-                      htmlFor="checkbox-operation-add"
-                      onChange={(checked) => {
-                        dispatch({
-                          type: "SET_OPERATION",
-                          payload: {
-                            addOrRemove: checked ? "add" : "remove",
-                            operation: "+",
-                          },
-                        });
-                      }}
-                    />
+                    <Tippy
+                      content={
+                        <span className="text-xs">
+                          ✔ other items before unchecking 'Add'.
+                        </span>
+                      }
+                      placement="top-end"
+                      disabled={
+                        !(
+                          worksheetSettings.operators.length === 1 &&
+                          worksheetSettings.operators.includes("+")
+                        )
+                      }
+                    >
+                      <span>
+                        <Checkbox
+                          disabled={
+                            worksheetSettings.operators.length === 1 &&
+                            worksheetSettings.operators.includes("+")
+                          }
+                          checked={worksheetSettings.operators.includes("+")}
+                          htmlFor="checkbox-operation-add"
+                          onChange={(checked) => {
+                            dispatch({
+                              type: "SET_OPERATION",
+                              payload: {
+                                addOrRemove: checked ? "add" : "remove",
+                                operation: "+",
+                              },
+                            });
+                          }}
+                        />
+                      </span>
+                    </Tippy>
                     <label
                       className="text-gray-600"
                       htmlFor="checkbox-operation-add"
@@ -255,9 +291,10 @@ const Home: NextPage = () => {
                       Add
                     </label>
                   </div>
+
                   <div className="flex gap-x-2 items-center">
                     <Checkbox
-                      checked={worksheetSettings.operations.includes("-")}
+                      checked={worksheetSettings.operators.includes("-")}
                       htmlFor="checkbox-operation-subtract"
                       onChange={(checked) => {
                         dispatch({
@@ -278,7 +315,7 @@ const Home: NextPage = () => {
                   </div>
                   <div className="flex gap-x-2 items-center">
                     <Checkbox
-                      checked={worksheetSettings.operations.includes("*")}
+                      checked={worksheetSettings.operators.includes("*")}
                       htmlFor="checkbox-operation-multiply"
                       onChange={(checked) => {
                         dispatch({
@@ -299,7 +336,7 @@ const Home: NextPage = () => {
                   </div>
                   <div className="flex gap-x-2 items-center">
                     <Checkbox
-                      checked={worksheetSettings.operations.includes("/")}
+                      checked={worksheetSettings.operators.includes("/")}
                       htmlFor="checkbox-operation-divide"
                       onChange={(checked) => {
                         dispatch({
@@ -320,17 +357,9 @@ const Home: NextPage = () => {
                   </div>
                 </div>
               </div>
-
-              {/* <button
-                className="flex items-center justify-center gap-x-1 bg-indigo-600 rounded px-3 py-2 text-white"
-                onClick={handleGenerateWorksheet}
-              >
-                <RandomIcon />
-                <span>Generate Worksheet</span>
-              </button> */}
             </div>
-            {/* Worksheet */}
 
+            {/* Worksheet */}
             <div className="mt-8 text-gray-600 flex flex-col gap-y-0.5">
               {additionWorksheetItems.map((worksheetItem, i) => (
                 <WorksheetItemElement
