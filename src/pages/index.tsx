@@ -253,7 +253,7 @@ const Home: NextPage = () => {
                     <Tippy
                       content={
                         <span className="text-xs">
-                          ✔ other items before unchecking 'Add'.
+                          Check other items before unchecking 'Add'.
                         </span>
                       }
                       placement="top-end"
