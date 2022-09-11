@@ -98,18 +98,14 @@ const Home: NextPage = () => {
     IWorksheetItem[]
   >([
     {
-      operands: ["1", "2"],
-      correctAnswer: 3,
+      expression: "1+1",
+      correctAnswer: 2,
     },
   ]);
 
   useEffect(() => {
     handleGenerateWorksheet();
   }, [worksheetSettings]);
-
-  useEffect(() => {
-    console.log(worksheetSettings.operations);
-  }, []);
 
   function handleGenerateWorksheet() {
     setAdditionWorksheetItems(generateWorksheet(worksheetSettings));
@@ -243,7 +239,6 @@ const Home: NextPage = () => {
                       checked={worksheetSettings.operations.includes("+")}
                       htmlFor="checkbox-operation-add"
                       onChange={(checked) => {
-                        console.log(checked);
                         dispatch({
                           type: "SET_OPERATION",
                           payload: {
@@ -258,6 +253,69 @@ const Home: NextPage = () => {
                       htmlFor="checkbox-operation-add"
                     >
                       Add
+                    </label>
+                  </div>
+                  <div className="flex gap-x-2 items-center">
+                    <Checkbox
+                      checked={worksheetSettings.operations.includes("-")}
+                      htmlFor="checkbox-operation-subtract"
+                      onChange={(checked) => {
+                        dispatch({
+                          type: "SET_OPERATION",
+                          payload: {
+                            addOrRemove: checked ? "add" : "remove",
+                            operation: "-",
+                          },
+                        });
+                      }}
+                    />
+                    <label
+                      className="text-gray-600"
+                      htmlFor="checkbox-operation-subtract"
+                    >
+                      Subtract
+                    </label>
+                  </div>
+                  <div className="flex gap-x-2 items-center">
+                    <Checkbox
+                      checked={worksheetSettings.operations.includes("*")}
+                      htmlFor="checkbox-operation-multiply"
+                      onChange={(checked) => {
+                        dispatch({
+                          type: "SET_OPERATION",
+                          payload: {
+                            addOrRemove: checked ? "add" : "remove",
+                            operation: "*",
+                          },
+                        });
+                      }}
+                    />
+                    <label
+                      className="text-gray-600"
+                      htmlFor="checkbox-operation-multiply"
+                    >
+                      Multiply
+                    </label>
+                  </div>
+                  <div className="flex gap-x-2 items-center">
+                    <Checkbox
+                      checked={worksheetSettings.operations.includes("/")}
+                      htmlFor="checkbox-operation-divide"
+                      onChange={(checked) => {
+                        dispatch({
+                          type: "SET_OPERATION",
+                          payload: {
+                            addOrRemove: checked ? "add" : "remove",
+                            operation: "/",
+                          },
+                        });
+                      }}
+                    />
+                    <label
+                      className="text-gray-600"
+                      htmlFor="checkbox-operation-divide"
+                    >
+                      Divide
                     </label>
                   </div>
                 </div>
