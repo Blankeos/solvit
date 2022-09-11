@@ -17,6 +17,7 @@ import {
   FiDivide as DivideIcon,
   FiX as MultiplyIcon,
   FiMinus as SubtractIcon,
+  FiChevronDown as ChevronIcon,
 } from "react-icons/fi";
 type ActionTypes =
   | {
@@ -100,6 +101,8 @@ const initialWorksheetSettings: IWorksheetSettings = {
   operators: ["+"],
 };
 const Home: NextPage = () => {
+  const [worksheetSettingsDropdownIsOpen, setWorksheetSettingsDropdownIsOpen] =
+    useState<boolean>(false);
   const [worksheetSettings, dispatch] = useReducer(
     reducer,
     initialWorksheetSettings
@@ -121,15 +124,15 @@ const Home: NextPage = () => {
     setAdditionWorksheetItems(generateWorksheet(worksheetSettings));
   }
 
-  function handleOperatorsChange(checked: boolean, operator: OperatorType) {
-    dispatch({
-      type: "SET_OPERATION",
-      payload: {
-        addOrRemove: checked ? "add" : "remove",
-        operation: operator,
-      },
-    });
-  }
+  // function handleOperatorsChange(checked: boolean, operator: OperatorType) {
+  //   dispatch({
+  //     type: "SET_OPERATION",
+  //     payload: {
+  //       addOrRemove: checked ? "add" : "remove",
+  //       operation: operator,
+  //     },
+  //   });
+  // }
 
   return (
     <div className="flex flex-col min-h-screen ">
@@ -155,218 +158,242 @@ const Home: NextPage = () => {
               </p>
             </header>
             {/* Settings */}
-            <div className="p-5 bg-gray-50 border rounded-xl text-sm flex flex-col gap-y-3">
-              <h2 className="text-sm font-semibold mb-1 text-gray-800">
-                Worksheet Randomizer Settings
-              </h2>
-              <div className="flex flex-col gap-y-1">
-                <h3 className="font-medium">Number of digits</h3>
-                <div className="border flex items-center p-2 px-5 gap-x-5 rounded-full bg-white">
-                  <span className="w-5 text-center">
-                    {Math.min(...worksheetSettings.numberOfDigits)}
-                  </span>
-                  <Range
-                    values={worksheetSettings.numberOfDigits}
-                    defaultValues={[2, 3]}
-                    min={1}
-                    max={5}
-                    step={1}
-                    onChange={(values) => {
-                      // Prevent unnecessary re-rendering
-                      if (
-                        values[0] === worksheetSettings.numberOfDigits[0] &&
-                        values[1] === worksheetSettings.numberOfDigits[1]
-                      )
-                        return;
-                      dispatch({
-                        type: "SET_NUMBER_OF_DIGITS",
-                        payload: values,
-                      });
-                    }}
-                  />
-                  <span className="w-5 text-center">
-                    {Math.max(...worksheetSettings.numberOfDigits)}
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <h3 className="font-medium">Number of operands</h3>
-                <Counter
-                  defaultValue={2}
-                  min={2}
-                  max={4}
-                  onChange={(value) => {
-                    dispatch({
-                      type: "SET_NUMBER_OF_OPERANDS",
-                      payload: value,
-                    });
+            <div className="p-5 bg-gray-50 border rounded-xl text-sm flex flex-col gap-y-5">
+              <div className="flex items-center gap-x-3 justify-between">
+                <h2 className="text-sm font-semibold mb-1 text-gray-800">
+                  Worksheet Randomizer Settings
+                </h2>
+                <button
+                  onClick={() => {
+                    setWorksheetSettingsDropdownIsOpen(
+                      !worksheetSettingsDropdownIsOpen
+                    );
                   }}
-                />
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <h3 className="font-medium">Number of items</h3>
-                <Counter
-                  defaultValue={15}
-                  min={1}
-                  max={50}
-                  onChange={(value) => {
-                    dispatch({
-                      type: "SET_NUMBER_OF_ITEMS",
-                      payload: value,
-                    });
-                  }}
-                />
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <h3 className="font-medium">Contain negatives</h3>
-                <div className="flex gap-x-4 items-center">
-                  <Checkbox
-                    checked={worksheetSettings.negative.containNegatives}
-                    htmlFor="contain-negatives-checkbox"
-                    onChange={(checked) => {
-                      dispatch({
-                        type: "SET_CONTAIN_NEGATIVES",
-                        payload: checked,
-                      });
-                    }}
+                  className="transition hover:bg-gray-200 rounded-md h-8 w-8 grid place-items-center text-gray-600"
+                >
+                  <ChevronIcon
+                    size="1.2rem"
+                    className={`transform transition ${
+                      worksheetSettingsDropdownIsOpen ? "rotate-180" : ""
+                    }`}
                   />
-                  {worksheetSettings.negative.containNegatives && (
-                    <>
-                      <span className="w-5 mr-2">
-                        {worksheetSettings.negative.chance * 100}%
+                </button>
+              </div>
+              {/* Settings Body */}
+              {worksheetSettingsDropdownIsOpen && (
+                <div className="flex flex-col gap-y-3">
+                  <div className="flex flex-col gap-y-1">
+                    <h3 className="font-medium">Number of digits</h3>
+                    <div className="border flex items-center p-2 px-5 gap-x-5 rounded-full bg-white">
+                      <span className="w-5 text-center">
+                        {Math.min(...worksheetSettings.numberOfDigits)}
                       </span>
                       <Range
-                        values={[worksheetSettings.negative.chance]}
-                        defaultValues={[0.1]}
-                        min={0.1}
-                        max={1}
-                        step={0.1}
+                        values={worksheetSettings.numberOfDigits}
+                        defaultValues={[2, 3]}
+                        min={1}
+                        max={5}
+                        step={1}
                         onChange={(values) => {
+                          // Prevent unnecessary re-rendering
+                          if (
+                            values[0] === worksheetSettings.numberOfDigits[0] &&
+                            values[1] === worksheetSettings.numberOfDigits[1]
+                          )
+                            return;
                           dispatch({
-                            type: "SET_NEGATIVE_CHANCE",
-                            payload: values[0],
+                            type: "SET_NUMBER_OF_DIGITS",
+                            payload: values,
                           });
                         }}
                       />
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <h3 className="font-medium">Operators</h3>
-                <div className="grid grid-cols-2 gap-y-2">
-                  <div className="flex gap-x-2 items-center">
-                    <Tippy
-                      content={
-                        <span className="text-xs">
-                          Check other items before unchecking '+'.
-                        </span>
-                      }
-                      placement="top-end"
-                      disabled={
-                        !(
-                          worksheetSettings.operators.length === 1 &&
-                          worksheetSettings.operators.includes("+")
-                        )
-                      }
-                    >
-                      <span>
-                        <Checkbox
-                          disabled={
-                            worksheetSettings.operators.length === 1 &&
-                            worksheetSettings.operators.includes("+")
+                      <span className="w-5 text-center">
+                        {Math.max(...worksheetSettings.numberOfDigits)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-y-1">
+                    <h3 className="font-medium">Number of operands</h3>
+                    <Counter
+                      defaultValue={2}
+                      min={2}
+                      max={4}
+                      onChange={(value) => {
+                        dispatch({
+                          type: "SET_NUMBER_OF_OPERANDS",
+                          payload: value,
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-y-1">
+                    <h3 className="font-medium">Number of items</h3>
+                    <Counter
+                      defaultValue={15}
+                      min={1}
+                      max={50}
+                      onChange={(value) => {
+                        dispatch({
+                          type: "SET_NUMBER_OF_ITEMS",
+                          payload: value,
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-y-1">
+                    <h3 className="font-medium">Contain negatives</h3>
+                    <div className="flex gap-x-4 items-center">
+                      <Checkbox
+                        checked={worksheetSettings.negative.containNegatives}
+                        htmlFor="contain-negatives-checkbox"
+                        onChange={(checked) => {
+                          dispatch({
+                            type: "SET_CONTAIN_NEGATIVES",
+                            payload: checked,
+                          });
+                        }}
+                      />
+                      {worksheetSettings.negative.containNegatives && (
+                        <>
+                          <span className="w-5 mr-2">
+                            {worksheetSettings.negative.chance * 100}%
+                          </span>
+                          <Range
+                            values={[worksheetSettings.negative.chance]}
+                            defaultValues={[0.1]}
+                            min={0.1}
+                            max={1}
+                            step={0.1}
+                            onChange={(values) => {
+                              dispatch({
+                                type: "SET_NEGATIVE_CHANCE",
+                                payload: values[0],
+                              });
+                            }}
+                          />
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-y-1">
+                    <h3 className="font-medium">Operators</h3>
+                    <div className="grid grid-cols-2 gap-y-2">
+                      <div className="flex gap-x-2 items-center">
+                        <Tippy
+                          content={
+                            <span className="text-xs">
+                              Check other items before unchecking '+'.
+                            </span>
                           }
-                          checked={worksheetSettings.operators.includes("+")}
+                          placement="top-end"
+                          disabled={
+                            !(
+                              worksheetSettings.operators.length === 1 &&
+                              worksheetSettings.operators.includes("+")
+                            )
+                          }
+                        >
+                          <span>
+                            <Checkbox
+                              disabled={
+                                worksheetSettings.operators.length === 1 &&
+                                worksheetSettings.operators.includes("+")
+                              }
+                              checked={worksheetSettings.operators.includes(
+                                "+"
+                              )}
+                              htmlFor="checkbox-operation-add"
+                              onChange={(checked) => {
+                                dispatch({
+                                  type: "SET_OPERATION",
+                                  payload: {
+                                    addOrRemove: checked ? "add" : "remove",
+                                    operation: "+",
+                                  },
+                                });
+                              }}
+                            />
+                          </span>
+                        </Tippy>
+                        <label
+                          className="text-gray-600"
                           htmlFor="checkbox-operation-add"
+                        >
+                          <AddIcon />
+                        </label>
+                      </div>
+
+                      <div className="flex gap-x-2 items-center">
+                        <Checkbox
+                          checked={worksheetSettings.operators.includes("-")}
+                          htmlFor="checkbox-operation-subtract"
                           onChange={(checked) => {
                             dispatch({
                               type: "SET_OPERATION",
                               payload: {
                                 addOrRemove: checked ? "add" : "remove",
-                                operation: "+",
+                                operation: "-",
                               },
                             });
                           }}
                         />
-                      </span>
-                    </Tippy>
-                    <label
-                      className="text-gray-600"
-                      htmlFor="checkbox-operation-add"
-                    >
-                      <AddIcon />
-                    </label>
-                  </div>
-
-                  <div className="flex gap-x-2 items-center">
-                    <Checkbox
-                      checked={worksheetSettings.operators.includes("-")}
-                      htmlFor="checkbox-operation-subtract"
-                      onChange={(checked) => {
-                        dispatch({
-                          type: "SET_OPERATION",
-                          payload: {
-                            addOrRemove: checked ? "add" : "remove",
-                            operation: "-",
-                          },
-                        });
-                      }}
-                    />
-                    <label
-                      className="text-gray-600"
-                      htmlFor="checkbox-operation-subtract"
-                    >
-                      <SubtractIcon />
-                    </label>
-                  </div>
-                  <div className="flex gap-x-2 items-center">
-                    <Checkbox
-                      checked={worksheetSettings.operators.includes("*")}
-                      htmlFor="checkbox-operation-multiply"
-                      onChange={(checked) => {
-                        dispatch({
-                          type: "SET_OPERATION",
-                          payload: {
-                            addOrRemove: checked ? "add" : "remove",
-                            operation: "*",
-                          },
-                        });
-                      }}
-                    />
-                    <label
-                      className="text-gray-600"
-                      htmlFor="checkbox-operation-multiply"
-                    >
-                      <MultiplyIcon />
-                    </label>
-                  </div>
-                  <div className="flex gap-x-2 items-center">
-                    <Checkbox
-                      checked={worksheetSettings.operators.includes("/")}
-                      htmlFor="checkbox-operation-divide"
-                      onChange={(checked) => {
-                        dispatch({
-                          type: "SET_OPERATION",
-                          payload: {
-                            addOrRemove: checked ? "add" : "remove",
-                            operation: "/",
-                          },
-                        });
-                      }}
-                    />
-                    <label
-                      className="text-gray-600"
-                      htmlFor="checkbox-operation-divide"
-                    >
-                      <DivideIcon />
-                    </label>
+                        <label
+                          className="text-gray-600"
+                          htmlFor="checkbox-operation-subtract"
+                        >
+                          <SubtractIcon />
+                        </label>
+                      </div>
+                      <div className="flex gap-x-2 items-center">
+                        <Checkbox
+                          checked={worksheetSettings.operators.includes("*")}
+                          htmlFor="checkbox-operation-multiply"
+                          onChange={(checked) => {
+                            dispatch({
+                              type: "SET_OPERATION",
+                              payload: {
+                                addOrRemove: checked ? "add" : "remove",
+                                operation: "*",
+                              },
+                            });
+                          }}
+                        />
+                        <label
+                          className="text-gray-600"
+                          htmlFor="checkbox-operation-multiply"
+                        >
+                          <MultiplyIcon />
+                        </label>
+                      </div>
+                      <div className="flex gap-x-2 items-center">
+                        <Checkbox
+                          checked={worksheetSettings.operators.includes("/")}
+                          htmlFor="checkbox-operation-divide"
+                          onChange={(checked) => {
+                            dispatch({
+                              type: "SET_OPERATION",
+                              payload: {
+                                addOrRemove: checked ? "add" : "remove",
+                                operation: "/",
+                              },
+                            });
+                          }}
+                        />
+                        <label
+                          className="text-gray-600"
+                          htmlFor="checkbox-operation-divide"
+                        >
+                          <DivideIcon />
+                        </label>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Worksheet */}
-            <div className="mt-8 text-gray-600 flex flex-col gap-y-0.5">
+            <div className="mt-5 text-gray-600 flex flex-col gap-y-0.5">
               {additionWorksheetItems.map((worksheetItem, i) => (
                 <WorksheetItemElement
                   key={i}

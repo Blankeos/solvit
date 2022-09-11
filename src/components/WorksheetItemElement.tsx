@@ -25,7 +25,7 @@ const WorksheetItemElement: React.FC<IWorksheetItemElementProps> = ({
           answerVisible ? "" : "bg-gray-200"
         }`}
       >
-        {!answerVisible && "answer"}
+        {!answerVisible && <span className="select-none">answer</span>}
         {answerVisible && (
           <span className="text-base">{worksheetItem.correctAnswer}</span>
         )}
