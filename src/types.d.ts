@@ -2,7 +2,7 @@ interface IWorksheetSettings {
   numberOfDigits: number[];
   numberOfItems: number;
   numberOfOperands: number;
-  operations: OperatorType[];
+  operators: OperatorType[];
   negative: {
     containNegatives: boolean;
     chance: number;

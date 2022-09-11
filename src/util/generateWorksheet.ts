@@ -42,12 +42,12 @@ export default function generateWorksheet(settings: IWorksheetSettings) {
       // attach operator. randomly choose an if possible operation.
       let operator: OperatorType = "+"; // "+" is default
 
-      if (settings.operations.length !== 0) {
+      if (settings.operators.length !== 0) {
         let randomOperationArrayIndex = random(
           0,
-          settings.operations.length - 1
+          settings.operators.length - 1
         );
-        operator = settings.operations[randomOperationArrayIndex];
+        operator = settings.operators[randomOperationArrayIndex];
       }
 
       if (j < operands.length - 1) expression += operator; // attach the operator
