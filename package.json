@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tippyjs/react": "^4.2.6",
     "immer": "^9.0.15",
     "lodash": "^4.17.21",
     "mathjs": "^11.1.0",

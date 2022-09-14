@@ -37,13 +37,25 @@ export default function generateWorksheet(settings: IWorksheetSettings) {
     // Generate the expression
     let expression = "";
     for (let j = 0; j < operands.length; j++) {
-      expression += operands[j];
-      if (j < operands.length - 1) expression += "+";
+      expression += operands[j]; // attach the number
+
+      // attach operator. randomly choose an if possible operation.
+      let operator: OperatorType = "+"; // "+" is default
+
+      if (settings.operators.length !== 0) {
+        let randomOperationArrayIndex = random(
+          0,
+          settings.operators.length - 1
+        );
+        operator = settings.operators[randomOperationArrayIndex];
+      }
+
+      if (j < operands.length - 1) expression += operator; // attach the operator
     }
     const correctAnswer = evaluate(expression);
 
     worksheetItems.push({
-      operands: operands,
+      expression: expression,
       correctAnswer: correctAnswer,
     });
   }

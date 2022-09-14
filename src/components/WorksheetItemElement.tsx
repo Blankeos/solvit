@@ -16,13 +16,7 @@ const WorksheetItemElement: React.FC<IWorksheetItemElementProps> = ({
   return (
     <div className="flex">
       <span className="w-8 inline-block">{nth})</span>
-      {worksheetItem.operands.map((operandItem, i) => (
-        <span key={i}>
-          <span>{operandItem}</span>
-          {i < worksheetItem.operands.length - 1 && <span>+</span>}
-        </span>
-      ))}
-      =<span className="flex-auto"></span>
+      {worksheetItem.expression}=<span className="flex-auto"></span>
       <button
         onClick={() => {
           setAnswerVisible(!answerVisible);
@@ -31,7 +25,7 @@ const WorksheetItemElement: React.FC<IWorksheetItemElementProps> = ({
           answerVisible ? "" : "bg-gray-200"
         }`}
       >
-        {!answerVisible && "answer"}
+        {!answerVisible && <span className="select-none">answer</span>}
         {answerVisible && (
           <span className="text-base">{worksheetItem.correctAnswer}</span>
         )}

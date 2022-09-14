@@ -2,7 +2,7 @@ interface IWorksheetSettings {
   numberOfDigits: number[];
   numberOfItems: number;
   numberOfOperands: number;
-  operations: ("+" | "-" | "*" | "/")[];
+  operators: OperatorType[];
   negative: {
     containNegatives: boolean;
     chance: number;
@@ -10,6 +10,8 @@ interface IWorksheetSettings {
 }
 
 interface IWorksheetItem {
-  operands: string[];
+  expression: string;
   correctAnswer: number;
 }
+
+type OperatorType = "+" | "-" | "*" | "/";
