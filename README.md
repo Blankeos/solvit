@@ -2,7 +2,9 @@
 
 🧮 Deliberate Math Practice Trainer
 
----
+Solvit creates randomly generated math worksheets so you can practice arithmetic fast! I made this so I can practice math every day.
+
+## ![image](README_assets/SolvitGif.gif)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
