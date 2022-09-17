@@ -20,6 +20,8 @@ import {
   FiMinus as SubtractIcon,
   FiChevronDown as ChevronIcon,
 } from "react-icons/fi";
+// import { GiPerspectiveDiceSixFacesRandom as RerollIcon } from "react-icons/gi";
+import { IoDiceOutline as RerollIcon } from "react-icons/io5";
 type ActionTypes =
   | {
       type: "SET_NUMBER_OF_DIGITS";
@@ -167,21 +169,31 @@ const Home: NextPage = () => {
                     Worksheet Randomizer Settings
                   </h2>
                 </div>
-                <button
-                  onClick={() => {
-                    setWorksheetSettingsDropdownIsOpen(
-                      !worksheetSettingsDropdownIsOpen
-                    );
-                  }}
-                  className="transition hover:bg-gray-200 rounded-md h-8 w-8 grid place-items-center text-gray-600"
-                >
-                  <ChevronIcon
-                    size="1.2rem"
-                    className={`transform transition ${
-                      worksheetSettingsDropdownIsOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
+                <div className="flex gap-x-2">
+                  <button
+                    onClick={() => {
+                      handleGenerateWorksheet();
+                    }}
+                    className="transition hover:bg-gray-200 rounded-md h-8 w-8 grid place-items-center text-gray-600 dice-btn"
+                  >
+                    <RerollIcon size="1.5rem" className="dice-icon" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setWorksheetSettingsDropdownIsOpen(
+                        !worksheetSettingsDropdownIsOpen
+                      );
+                    }}
+                    className="transition hover:bg-gray-200 rounded-md h-8 w-8 grid place-items-center text-gray-600"
+                  >
+                    <ChevronIcon
+                      size="1.2rem"
+                      className={`transform transition ${
+                        worksheetSettingsDropdownIsOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
               {/* Settings Body */}
               <div

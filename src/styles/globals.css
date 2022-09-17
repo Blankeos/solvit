@@ -37,3 +37,21 @@ a {
 .check-box:checked ~ .check-icon {
   @apply text-opacity-100 scale-100;
 }
+
+@keyframes spin-dice {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.dice-btn:focus > .dice-icon {
+  -webkit-animation: spin-dice normal 0.2s;
+  animation: spin-dice normal 0.2s;
+}
+
+.dice-btn:active > .dice-icon {
+  -webkit-animation: none;
+  animation: none;
+}
