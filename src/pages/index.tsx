@@ -20,7 +20,6 @@ import {
   FiMinus as SubtractIcon,
   FiChevronDown as ChevronIcon,
 } from "react-icons/fi";
-// import { GiPerspectiveDiceSixFacesRandom as RerollIcon } from "react-icons/gi";
 import { IoDiceOutline as RerollIcon } from "react-icons/io5";
 type ActionTypes =
   | {
