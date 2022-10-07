@@ -408,7 +408,7 @@ const Home: NextPage = () => {
             </div>
 
             {/* Worksheet */}
-            <div className="mt-5 text-gray-600 flex flex-col gap-y-0.5">
+            <div className="mt-5 text-gray-600 flex flex-col gap-y-1.5">
               {additionWorksheetItems.map((worksheetItem, i) => (
                 <WorksheetItemElement
                   key={i}
